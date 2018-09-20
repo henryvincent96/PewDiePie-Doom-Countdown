@@ -5,8 +5,6 @@ import datetime
 import platform
 from os import system
 
-thisPlatform = platform.system()
-
 def clearScreen():
     if(thisPlatform == 'Windows'):
         _ = system('cls')
@@ -33,6 +31,7 @@ pdpID = "UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 tseriesID = "UCq-Fj5jknLsUf-MWSy4_brA"
 
 #init
+thisPlatform = platform.system()
 pdpCount = 0
 tseriesCount = 0
 netChange = 0
