@@ -2,12 +2,21 @@ import urllib.request
 import json
 import time
 import datetime
+import platform
 from os import system
+
+thisPlatform = platform.system()
+
+def clearScreen():
+    if(thisPlatform == 'Windows'):
+        _ = system('cls')
+    elif(thisPlatform == 'Linux'):
+        _ = system('clear')
 
 #gets sub count from youtube for a given channel ID
 def getSubCount(id):
     data = urllib.request.urlopen("https://www.googleapis.com/youtube/v3/channels?part=statistics&id=" + id + "&key=" + key).read()
-    return json.loads(data)["items"][0]["statistics"]["subscriberCount"]
+    return json.loads(data.decode('utf-8'))["items"][0]["statistics"]["subscriberCount"]
 
 #Calculates the difference between PewDiePie and T Series
 #For optimisation, sub counts are global variables
@@ -18,6 +27,7 @@ def getCountdown():
     return pdpCount - tseriesCount
 
 #variables required for API
+#Yes, I know my API key is public, but I'm hoping people wont abuse that. API keys are free you know.
 key = "AIzaSyBR7ZQmh02ETze1hjNS7rFYsSJSBYoUsvY"
 pdpID = "UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 tseriesID = "UCq-Fj5jknLsUf-MWSy4_brA"
@@ -39,7 +49,7 @@ while True:
         netChange += newCount - previousCount
         delta = datetime.datetime.now() - timeAtStart
         #output
-        _ = system('cls')
+        clearScreen()
         print("PewDiePie Sub Count: " + str(pdpCount))
         print("T Series Sub Count: " + str(tseriesCount))
         print("Current Difference: " + str(newCount))
