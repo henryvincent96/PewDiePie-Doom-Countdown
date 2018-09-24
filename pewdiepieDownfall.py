@@ -6,9 +6,9 @@ import platform
 from os import system
 
 def clearScreen():
-    if(thisPlatform == 'Windows'):
+    if (thisPlatform == 'Windows'):
         _ = system('cls')
-    elif(thisPlatform == 'Linux'):
+    elif (thisPlatform == 'Linux'):
         _ = system('clear')
 
 #gets sub count from youtube for a given channel ID
@@ -23,6 +23,10 @@ def getCountdown():
     pdpCount = int(getSubCount(pdpID))
     tseriesCount = int(getSubCount(tseriesID))
     return pdpCount - tseriesCount
+
+#Removes messy microseconds output from deltaTime
+def remMicroseconds(delta):
+    return delta - datetime.timedelta(microseconds = delta.microseconds)
 
 #variables required for API
 #Yes, I know my API key is public, but I'm hoping people wont abuse that. API keys are free you know.
@@ -53,7 +57,7 @@ while True:
         print("T Series Sub Count: " + str(tseriesCount))
         print("Current Difference: " + str(newCount))
         print("Net Change Since Launch: " + str(netChange))
-        print("Time Recorded: " + str(delta))
+        print("Time Recorded: " + str(remMicroseconds(delta)))
     except TimeoutError:
         print("Timeout error")
     except urllib.error.URLError:
