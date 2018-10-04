@@ -13,8 +13,9 @@ def clearScreen():
 
 #gets sub count from youtube for a given channel ID
 def getSubCount(id):
-    data = urllib.request.urlopen("https://www.googleapis.com/youtube/v3/channels?part=statistics&id=" + id + "&key=" + key).read()
-    return json.loads(data.decode('utf-8'))["items"][0]["statistics"]["subscriberCount"]
+    data = urllib.request.urlopen('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' 
+    + id + '&key=' + key).read()
+    return json.loads(data.decode('utf-8'))['items'][0]['statistics']['subscriberCount']
 
 #Calculates the difference between PewDiePie and T Series
 #For optimisation, sub counts are global variables
@@ -24,15 +25,11 @@ def getCountdown():
     tseriesCount = int(getSubCount(tseriesID))
     return pdpCount - tseriesCount
 
-#Removes messy microseconds output from deltaTime
-def remMicroseconds(delta):
-    return delta - datetime.timedelta(microseconds = delta.microseconds)
-
 #variables required for API
-#Yes, I know my API key is public, but I'm hoping people wont abuse that. API keys are free you know.
-key = "AIzaSyBR7ZQmh02ETze1hjNS7rFYsSJSBYoUsvY"
-pdpID = "UC-lHJZR3Gqxm24_Vd_AJ5Yw"
-tseriesID = "UCq-Fj5jknLsUf-MWSy4_brA"
+#Yes, I know my API key is public, but I'm hoping people won't abuse that. API keys are free you know.
+key = 'AIzaSyBR7ZQmh02ETze1hjNS7rFYsSJSBYoUsvY'
+pdpID = 'UC-lHJZR3Gqxm24_Vd_AJ5Yw'
+tseriesID = 'UCq-Fj5jknLsUf-MWSy4_brA'
 
 #init
 thisPlatform = platform.system()
@@ -41,7 +38,6 @@ tseriesCount = 0
 netChange = 0
 previousCount = 0
 newCount = getCountdown()
-timeAtStart = datetime.datetime.now()
 
 #main loop
 while True:
@@ -49,18 +45,18 @@ while True:
     try:
         previousCount = newCount
         newCount = getCountdown()
-        netChange += newCount - previousCount
-        delta = datetime.datetime.now() - timeAtStart
+        netChange = newCount - previousCount
+
+        if netChange >= 0:
+            netChange = str('+' + str(netChange))
         #output
         clearScreen()
-        print("PewDiePie Sub Count: " + str(pdpCount))
-        print("T Series Sub Count: " + str(tseriesCount))
-        print("Current Difference: " + str(newCount))
-        print("Net Change Since Launch: " + str(netChange))
-        print("Time Recorded: " + str(remMicroseconds(delta)))
+        print('PewDiePie Sub Count: ' + '{:,}'.format(pdpCount))
+        print('T Series Sub Count: ' + '{:,}'.format(tseriesCount))
+        print('Current Difference: ' + '{:,}'.format(newCount)+ ' (' + str(netChange) +')')
     except TimeoutError:
-        print("Timeout error")
+        print('Timeout error')
     except urllib.error.URLError:
-        print("URL error")
+        print('URL error')
     #don't really want google thinking I'm DDOSing them
     time.sleep(1)
