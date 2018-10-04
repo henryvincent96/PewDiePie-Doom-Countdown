@@ -5,11 +5,12 @@ import datetime
 import platform
 from os import system
 
-def clearScreen():
+def setClearScreenCommand():
+    thisPlatform = platform.system()
     if (thisPlatform == 'Windows'):
-        _ = system('cls')
+        return 'cls'
     elif (thisPlatform == 'Linux'):
-        _ = system('clear')
+        return 'clear'
 
 #gets sub count from youtube for a given channel ID
 def getSubCount(id):
@@ -32,7 +33,7 @@ pdpID = 'UC-lHJZR3Gqxm24_Vd_AJ5Yw'
 tseriesID = 'UCq-Fj5jknLsUf-MWSy4_brA'
 
 #init
-thisPlatform = platform.system()
+clearScreenCommand = setClearScreenCommand()
 pdpCount = 0
 tseriesCount = 0
 netChange = 0
@@ -50,7 +51,7 @@ while True:
         if netChange >= 0:
             netChange = str('+' + str(netChange))
         #output
-        clearScreen()
+        _ = system(clearScreenCommand)
         print('PewDiePie Sub Count: ' + '{:,}'.format(pdpCount))
         print('T Series Sub Count: ' + '{:,}'.format(tseriesCount))
         print('Current Difference: ' + '{:,}'.format(newCount)+ ' (' + str(netChange) +')')
