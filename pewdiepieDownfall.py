@@ -1,5 +1,6 @@
 import urllib.request
 import json
+import time
 import platform
 from os import system
 
