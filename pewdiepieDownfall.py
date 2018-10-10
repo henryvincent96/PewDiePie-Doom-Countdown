@@ -3,7 +3,7 @@ import json
 import time
 import platform
 import threading
-from os import system
+import os
 from appJar import gui
 
 #gets sub count from youtube for a given channel ID
@@ -71,6 +71,7 @@ counterThread = Counter(1, "CounterThread", 1)
 counterThread.start()
 print('Exiting main thread')
 
+#GUI labels
 pSubCountTtl = 'pSubCountTtl'
 pSubCountVal = 'pSubCountval'
 tSubCountTtl = 'tSubCountTtl'
@@ -78,6 +79,7 @@ tSubCountVal = 'tSubCountVal'
 diffTtl = 'diffTtl'
 diffVal = 'diffVal'
 
+#Setup GUI
 app = gui('PewDiePie Doom Countdown', '380X265')
 
 app.addLabel(pSubCountTtl, 'PewDiePie Sub Count:')
@@ -92,6 +94,11 @@ def updateValLabels():
     app.setLabel(tSubCountVal, '{:,}'.format(tseriesCount))
     app.setLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
 
-app.registerEvent(updateValLabels)
+def quitBehaviour():
+    os._exit(0)
 
+app.registerEvent(updateValLabels)
+app.setStopFunction(quitBehaviour)
+
+#LaunchGUI
 app.go()
