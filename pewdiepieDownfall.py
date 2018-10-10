@@ -6,13 +6,6 @@ import threading
 from os import system
 from appJar import gui
 
-def setClearScreenCommand():
-    thisPlatform = platform.system()
-    if (thisPlatform == 'Windows'):
-        return 'cls'
-    elif (thisPlatform == 'Linux'):
-        return 'clear'
-
 #gets sub count from youtube for a given channel ID
 def getSubCount(id):
     data = urllib.request.urlopen('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' 
@@ -33,7 +26,7 @@ key = 'AIzaSyBR7ZQmh02ETze1hjNS7rFYsSJSBYoUsvY'
 pdpID = 'UC-lHJZR3Gqxm24_Vd_AJ5Yw'
 tseriesID = 'UCq-Fj5jknLsUf-MWSy4_brA'
 
-exitFlag = 0
+exitFlag = False
 
 class Counter (threading.Thread):
     def __init__(self, threadID, name, counter):
@@ -54,7 +47,7 @@ previousCount = 0
 newCount = getCountdown()
 
 def startCounter(threadName, counter, delay):
-    global newCount
+    global newCount, netChange
     while True:
         #logic
         try:
@@ -78,13 +71,27 @@ counterThread = Counter(1, "CounterThread", 1)
 counterThread.start()
 print('Exiting main thread')
 
-app = gui('PewDiePie Doom Countdown', '350X100')
+pSubCountTtl = 'pSubCountTtl'
+pSubCountVal = 'pSubCountval'
+tSubCountTtl = 'tSubCountTtl'
+tSubCountVal = 'tSubCountVal'
+diffTtl = 'diffTtl'
+diffVal = 'diffVal'
 
-app.addLabel('pSubCountTtl', 'PewDiePie Sub Count:')
-app.addLabel('pSubCountval', '{:,}'.format(pdpCount))
-app.addLabel('tSubCountTtl', 'TSeries Sub Count:')
-app.addLabel('tSubCountVal', '{:,}'.format(tseriesCount))
-app.addLabel('diffTtl', 'Current Difference:')
-app.addLabel('diffVal', '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
+app = gui('PewDiePie Doom Countdown', '380X265')
+
+app.addLabel(pSubCountTtl, 'PewDiePie Sub Count:')
+app.addLabel(pSubCountVal, '{:,}'.format(pdpCount))
+app.addLabel(tSubCountTtl, 'TSeries Sub Count:')
+app.addLabel(tSubCountVal, '{:,}'.format(tseriesCount))
+app.addLabel(diffTtl, 'Current Difference:')
+app.addLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
+
+def updateValLabels():
+    app.setLabel(pSubCountVal, '{:,}'.format(pdpCount))
+    app.setLabel(tSubCountVal, '{:,}'.format(tseriesCount))
+    app.setLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
+
+app.registerEvent(updateValLabels)
 
 app.go()
