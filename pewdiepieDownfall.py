@@ -78,10 +78,13 @@ counterThread = Counter(1, "CounterThread", 1)
 counterThread.start()
 print('Exiting main thread')
 
-app = gui()
+app = gui('PewDiePie Doom Countdown', '350X100')
 
-app.addLabel('pSubCount', 'PewDiePie Sub Count: ' + '{:,}'.format(pdpCount))
-app.addLabel('tSubCount', 'TSeries Sub Count: ' + '{:,}'.format(tseriesCount))
-app.addLabel('diff', 'Current Difference: ' + '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
+app.addLabel('pSubCountTtl', 'PewDiePie Sub Count:')
+app.addLabel('pSubCountval', '{:,}'.format(pdpCount))
+app.addLabel('tSubCountTtl', 'TSeries Sub Count:')
+app.addLabel('tSubCountVal', '{:,}'.format(tseriesCount))
+app.addLabel('diffTtl', 'Current Difference:')
+app.addLabel('diffVal', '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
 
 app.go()
