@@ -46,16 +46,15 @@ class Counter (threading.Thread):
         startCounter(self.name, 5, self.counter)
         print('Exiting ' + self.name)
 
-def startCounter(threadName, counter, delay):
-    #init
-    clearScreenCommand = setClearScreenCommand()
-    pdpCount = 0
-    tseriesCount = 0
-    netChange = 0
-    previousCount = 0
-    newCount = getCountdown()
+#init
+pdpCount = 0
+tseriesCount = 0
+netChange = 0
+previousCount = 0
+newCount = getCountdown()
 
-    #main loop
+def startCounter(threadName, counter, delay):
+    global newCount
     while True:
         #logic
         try:
@@ -68,11 +67,6 @@ def startCounter(threadName, counter, delay):
 
             if netChange >= 0:
                 netChange = str('+' + str(netChange))
-            #output
-            _ = system(clearScreenCommand)
-            print('PewDiePie Sub Count: ' + '{:,}'.format(pdpCount))
-            print('T Series Sub Count: ' + '{:,}'.format(tseriesCount))
-            print('Current Difference: ' + '{:,}'.format(newCount)+ ' (' + str(netChange) +')')
         except TimeoutError:
             print('Timeout error')
         except urllib.error.URLError:
@@ -83,3 +77,11 @@ def startCounter(threadName, counter, delay):
 counterThread = Counter(1, "CounterThread", 1)
 counterThread.start()
 print('Exiting main thread')
+
+app = gui()
+
+app.addLabel('pSubCount', 'PewDiePie Sub Count: ' + '{:,}'.format(pdpCount))
+app.addLabel('tSubCount', 'TSeries Sub Count: ' + '{:,}'.format(tseriesCount))
+app.addLabel('diff', 'Current Difference: ' + '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
+
+app.go()
