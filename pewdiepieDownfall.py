@@ -80,14 +80,18 @@ diffTtl = 'diffTtl'
 diffVal = 'diffVal'
 
 #Setup GUI
-app = gui('PewDiePie Doom Countdown', '380X265')
+app = gui('PewDiePie Doom Countdown', '330X86', showIcon=False)
+app.setResizable(canResize=False)
+app.setFont(size=11)
+app.setStretch("none")
 
-app.addLabel(pSubCountTtl, 'PewDiePie Sub Count:')
-app.addLabel(pSubCountVal, '{:,}'.format(pdpCount))
-app.addLabel(tSubCountTtl, 'TSeries Sub Count:')
-app.addLabel(tSubCountVal, '{:,}'.format(tseriesCount))
-app.addLabel(diffTtl, 'Current Difference:')
-app.addLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
+app.addLabel(pSubCountTtl, 'PewDiePie Sub Count:', 0, 0)
+app.addLabel(tSubCountTtl, 'TSeries Sub Count:', 1, 0)
+app.addLabel(diffTtl, 'Current Difference:', 2, 0)
+
+app.addLabel(pSubCountVal, '{:,}'.format(pdpCount), 0, 1)
+app.addLabel(tSubCountVal, '{:,}'.format(tseriesCount), 1 ,1)
+app.addLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')', 2, 1)
 
 def updateValLabels():
     app.setLabel(pSubCountVal, '{:,}'.format(pdpCount))
