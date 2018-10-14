@@ -67,9 +67,8 @@ def startCounter(threadName, counter, delay):
         #don't really want google thinking I'm DDOSing them
         time.sleep(delay)
 
-counterThread = Counter(1, "CounterThread", 1)
+counterThread = Counter(1, "Main Counter", 1)
 counterThread.start()
-print('Exiting main thread')
 
 #GUI labels
 pSubCountTtl = 'pSubCountTtl'
