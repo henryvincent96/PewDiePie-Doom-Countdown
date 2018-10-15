@@ -79,10 +79,12 @@ diffTtl = 'diffTtl'
 diffVal = 'diffVal'
 
 #Setup GUI
-app = gui('PewDiePie Doom Countdown', '330X86', showIcon=False)
+app = gui('PewDiePie Doom Countdown', showIcon=False)
 app.setResizable(canResize=False)
+app.setSize(330, 86)
 app.setFont(size=11)
 app.setStretch("none")
+app.setSticky("w")
 
 app.addLabel(pSubCountTtl, 'PewDiePie Sub Count:', 0, 0)
 app.addLabel(tSubCountTtl, 'TSeries Sub Count:', 1, 0)
