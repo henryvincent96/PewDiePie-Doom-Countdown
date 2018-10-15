@@ -6,7 +6,7 @@ Simply run the python file using a python interpreter. A window will open to dis
 
 Currently only works with Windows and Linux.
 
-## Dependancies
+## Dependencies
 
 * Python 3
 * Tkinter
