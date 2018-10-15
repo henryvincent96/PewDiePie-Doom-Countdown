@@ -80,7 +80,7 @@ diffVal = 'diffVal'
 
 #Setup GUI
 app = gui('PewDiePie Doom Countdown', showIcon=False)
-app.setResizable(canResize=False)
+app.setResizable(canResize=True)
 app.setSize(330, 86)
 app.setFont(size=11)
 app.setStretch("none")
