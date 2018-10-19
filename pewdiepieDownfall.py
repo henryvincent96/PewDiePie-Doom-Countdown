@@ -21,7 +21,6 @@ def getCountdown():
     return pdpCount - tseriesCount
 
 #variables required for API
-#Yes, I know my API key is public, but I'm hoping people won't abuse that. API keys are free you know.
 key = 'AIzaSyBR7ZQmh02ETze1hjNS7rFYsSJSBYoUsvY'
 pdpID = 'UC-lHJZR3Gqxm24_Vd_AJ5Yw'
 tseriesID = 'UCq-Fj5jknLsUf-MWSy4_brA'
