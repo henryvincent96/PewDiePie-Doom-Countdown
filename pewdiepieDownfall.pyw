@@ -45,6 +45,7 @@ netChange = 0
 previousCount = 0
 newCount = getCountdown()
 connectionFault = False
+connectionFaultState = False
 
 def startCounter(threadName, counter, delay):
     global newCount, netChange, connectionFault
@@ -94,20 +95,25 @@ app.setSticky("w")
 app.addLabel(pSubCountTtl, 'PewDiePie Sub Count:', 0, 0)
 app.addLabel(tSubCountTtl, 'TSeries Sub Count:', 1, 0)
 app.addLabel(diffTtl, 'Current Difference:', 2, 0)
-app.addLabel(errorTtl, 'ERROR: ', 3, 0)
+app.addLabel(errorTtl, '', 3, 0)
 
 app.addLabel(pSubCountVal, '{:,}'.format(pdpCount), 0, 1)
 app.addLabel(tSubCountVal, '{:,}'.format(tseriesCount), 1 ,1)
 app.addLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')', 2, 1)
 
 def updateValLabels():
-    app.setLabel(pSubCountVal, '{:,}'.format(pdpCount))
-    app.setLabel(tSubCountVal, '{:,}'.format(tseriesCount))
-    app.setLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
-    if(connectionFault):
-        app.setLabel(errorTtl, 'CONNECTION FAULT')
-    else:
-        app.setLabel(errorTtl, '')
+    global connectionFault, connectionFaultState
+    
+    if(connectionFaultState != connectionFault):
+        connectionFaultState = connectionFault
+        if(connectionFault):
+            app.setLabel(errorTtl, 'CONNECTION FAULT')
+        else:
+            app.setLabel(errorTtl, '')
+    elif(not(connectionFault)):
+        app.setLabel(pSubCountVal, '{:,}'.format(pdpCount))
+        app.setLabel(tSubCountVal, '{:,}'.format(tseriesCount))
+        app.setLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
 
 def quitBehaviour():
     os._exit(0)
