@@ -56,7 +56,7 @@ def startCounter(threadName, counter, delay):
                 threadName.exit()
 
             previousCount = newCount
-            newCount = getCountdown()
+            newCount = abs(getCountdown())
             netChange = newCount - previousCount
 
             if netChange >= 0:
