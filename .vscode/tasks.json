@@ -8,18 +8,39 @@
             "type": "shell",
             "command": "pyinstaller",
             "args": [
-                // Ask msbuild to generate full paths for file names.
+                "pewdiepieDownfall.pyw",
+                "-w"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build one-file",
+            "type": "shell",
+            "command": "pyinstaller",
+            "args": [
                 "pewdiepieDownfall.pyw",
                 "-F",
                 "-w"
             ],
             "group": "build",
             "presentation": {
-                // Reveal the output only if unrecognized errors occur.
-                "reveal": "silent"
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
             },
-            // Use the standard MS compiler pattern to detect errors, warnings and infos
-            "problemMatcher": "$msCompile"
+            "problemMatcher":"$msCompile"
         }
     ]
 }
