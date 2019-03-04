@@ -82,6 +82,7 @@ tSubCountTtl = 'tSubCountTtl'
 tSubCountVal = 'tSubCountVal'
 diffTtl = 'diffTtl'
 diffVal = 'diffVal'
+netChangeVal = 'netChangeVal'
 errorTtl = 'errorTtl'
 
 #Setup GUI
@@ -89,17 +90,19 @@ app = gui('PewDiePie Doom Countdown', showIcon=False)
 app.setResizable(canResize=True)
 app.setSize(330, 86)
 app.setFont(size=11)
-app.setStretch("none")
-app.setSticky("w")
+app.setStretch("column")
+app.setSticky("nesw")
+app.setPadding([5,2])
 
-app.addLabel(pSubCountTtl, 'PewDiePie Sub Count:', 0, 0)
-app.addLabel(tSubCountTtl, 'TSeries Sub Count:', 1, 0)
-app.addLabel(diffTtl, 'Current Difference:', 2, 0)
-app.addLabel(errorTtl, '', 3, 0)
+app.addLabel(pSubCountTtl, 'PewDiePie', 0, 0)
+app.addLabel(tSubCountTtl, 'TSeries', 0, 1)
+app.addLabel(diffTtl, 'Difference', 2, 0, colspan=2)
+app.addLabel(errorTtl, '', 5, 0)
 
-app.addLabel(pSubCountVal, '{:,}'.format(pdpCount), 0, 1)
+app.addLabel(pSubCountVal, '{:,}'.format(pdpCount), 1, 0)
 app.addLabel(tSubCountVal, '{:,}'.format(tseriesCount), 1 ,1)
-app.addLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')', 2, 1)
+app.addLabel(diffVal, '{:,}'.format(newCount), 3, 0, colspan=2)
+app.addLabel(netChangeVal, str(netChange), 4, 0, colspan=2)
 
 def updateValLabels():
     global connectionFault, connectionFaultState
@@ -113,7 +116,8 @@ def updateValLabels():
     elif(not(connectionFault)):
         app.setLabel(pSubCountVal, '{:,}'.format(pdpCount))
         app.setLabel(tSubCountVal, '{:,}'.format(tseriesCount))
-        app.setLabel(diffVal, '{:,}'.format(newCount) + ' (' + str(netChange) + ')')
+        app.setLabel(diffVal, '{:,}'.format(newCount))
+        app.setLabel(netChangeVal, str(netChange))
 
 def quitBehaviour():
     os._exit(0)

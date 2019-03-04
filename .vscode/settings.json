@@ -10,6 +10,7 @@
         "hjzr",
         "iza",
         "l",
+        "nesw",
         "ns",
         "qmh",
         "r",
@@ -25,5 +26,7 @@
         "yo",
         "yw",
         "z"
-    ]
+    ],
+    "python.pythonPath": "C:\\Python37\\python.exe",
+    "python.linting.pylintEnabled": true
 }
