@@ -87,13 +87,14 @@ errorTtl = 'errorTtl'
 
 #Setup GUI
 app = gui('PewDiePie Doom Countdown', showIcon=False)
-app.setResizable(canResize=True)
-app.setSize(330, 86)
-app.setFont(size=11)
+app.setSize(330, 153)
+app.setResizable(True)
+app.setBg('white', True, False)
 app.setStretch("column")
 app.setSticky("nesw")
-app.setPadding([5,2])
+app.setPadding([5,0])
 
+#Create labels
 app.addLabel(pSubCountTtl, 'PewDiePie', 0, 0)
 app.addLabel(tSubCountTtl, 'TSeries', 0, 1)
 app.addLabel(diffTtl, 'Difference', 2, 0, colspan=2)
@@ -104,6 +105,27 @@ app.addLabel(tSubCountVal, '{:,}'.format(tseriesCount), 1 ,1)
 app.addLabel(diffVal, '{:,}'.format(newCount), 3, 0, colspan=2)
 app.addLabel(netChangeVal, str(netChange), 4, 0, colspan=2)
 
+#Configure label style
+globalFont = 'Helvetica'
+wTitle = globalFont + ' 8 bold'
+wTitleColour = '#828282'
+channelValue = globalFont + ' 14'
+
+app.getLabelWidget(pSubCountTtl).config(font=wTitle)
+app.setLabelFg(pSubCountTtl, wTitleColour)
+app.getLabelWidget(tSubCountTtl).config(font=wTitle)
+app.setLabelFg(tSubCountTtl, wTitleColour)
+app.getLabelWidget(diffTtl).config(font=wTitle)
+app.setLabelFg(diffTtl, wTitleColour)
+
+app.getLabelWidget(pSubCountVal).config(font=channelValue)
+app.getLabelWidget(tSubCountVal).config(font=channelValue)
+
+app.getLabelWidget(diffVal).config(font=globalFont + ' 20')
+app.getLabelWidget(netChangeVal).config(font=globalFont + ' 11')
+app.setLabelFg(netChangeVal, wTitleColour)
+
+#update labels
 def updateValLabels():
     global connectionFault, connectionFaultState
     
