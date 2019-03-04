@@ -87,7 +87,7 @@ errorTtl = 'errorTtl'
 
 #Setup GUI
 app = gui('PewDiePie Doom Countdown', showIcon=False)
-app.setSize(330, 153)
+app.setSize(330, 173)
 app.setResizable(True)
 app.setBg('white', True, False)
 app.setStretch("column")
@@ -142,7 +142,10 @@ def updateValLabels():
         app.setLabel(netChangeVal, str(netChange))
 
 def quitBehaviour():
+    app.saveSettings('pdpDoom.ini')
     os._exit(0)
+
+app.loadSettings('pdpDoom.ini', useSettings=True)
 
 app.registerEvent(updateValLabels)
 app.setStopFunction(quitBehaviour)
