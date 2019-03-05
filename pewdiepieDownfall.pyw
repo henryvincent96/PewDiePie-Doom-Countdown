@@ -84,21 +84,40 @@ diffTtl = 'diffTtl'
 diffVal = 'diffVal'
 netChangeVal = 'netChangeVal'
 errorTtl = 'errorTtl'
+errorDesc = 'errorDesc'
+
+globalFont = 'Helvetica'
+wTitle = globalFont + ' 8 bold'
+wTitleColour = '#828282'
+channelValue = globalFont + ' 14'
 
 #Setup GUI
 app = gui('PewDiePie Doom Countdown', showIcon=False)
-app.setSize(330, 173)
+app.setSize(330, 153)
 app.setResizable(True)
 app.setBg('white', True, False)
 app.setStretch("column")
 app.setSticky("nesw")
 app.setPadding([5,0])
 
+errorFrame = 'error'
+app.startFrame(errorFrame, row=0, column=0)
+
+app.addLabel(errorTtl, 'uh oh...', 0, 0)
+app.addLabel(errorDesc, 'We can\'t connect right now...', 1, 0)
+
+app.getLabelWidget(errorTtl).config(font=globalFont + ' 22')
+app.setLabelFg(errorTtl, wTitleColour)
+app.getLabelWidget(errorDesc).config(font=globalFont + ' 10')
+
+app.stopFrame()
+
+counterFrame = 'counter'
+app.startFrame(counterFrame, row=0, column=0)
 #Create labels
 app.addLabel(pSubCountTtl, 'PewDiePie', 0, 0)
 app.addLabel(tSubCountTtl, 'TSeries', 0, 1)
 app.addLabel(diffTtl, 'Difference', 2, 0, colspan=2)
-app.addLabel(errorTtl, '', 5, 0)
 
 app.addLabel(pSubCountVal, '{:,}'.format(pdpCount), 1, 0)
 app.addLabel(tSubCountVal, '{:,}'.format(tseriesCount), 1 ,1)
@@ -106,11 +125,6 @@ app.addLabel(diffVal, '{:,}'.format(newCount), 3, 0, colspan=2)
 app.addLabel(netChangeVal, str(netChange), 4, 0, colspan=2)
 
 #Configure label style
-globalFont = 'Helvetica'
-wTitle = globalFont + ' 8 bold'
-wTitleColour = '#828282'
-channelValue = globalFont + ' 14'
-
 app.getLabelWidget(pSubCountTtl).config(font=wTitle)
 app.setLabelFg(pSubCountTtl, wTitleColour)
 app.getLabelWidget(tSubCountTtl).config(font=wTitle)
@@ -125,6 +139,8 @@ app.getLabelWidget(diffVal).config(font=globalFont + ' 20')
 app.getLabelWidget(netChangeVal).config(font=globalFont + ' 11')
 app.setLabelFg(netChangeVal, wTitleColour)
 
+app.stopFrame()
+
 #update labels
 def updateValLabels():
     global connectionFault, connectionFaultState
@@ -132,9 +148,9 @@ def updateValLabels():
     if(connectionFaultState != connectionFault):
         connectionFaultState = connectionFault
         if(connectionFault):
-            app.setLabel(errorTtl, 'CONNECTION FAULT')
+            app.raiseFrame(errorFrame)
         else:
-            app.setLabel(errorTtl, '')
+            app.raiseFrame(counterFrame)
     elif(not(connectionFault)):
         app.setLabel(pSubCountVal, '{:,}'.format(pdpCount))
         app.setLabel(tSubCountVal, '{:,}'.format(tseriesCount))
